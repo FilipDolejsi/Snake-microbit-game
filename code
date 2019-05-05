@@ -1,0 +1,31 @@
+let apple: game.LedSprite = null
+let snake: game.LedSprite = null
+input.onButtonPressed(Button.A, function () {
+    snake.turn(Direction.Right, 90)
+})
+input.onButtonPressed(Button.B, function () {
+    snake.move(1)
+    if (snake.isTouching(apple)) {
+        apple.delete()
+        game.addScore(1)
+        apple = game.createSprite(Math.randomRange(1, 3), Math.randomRange(1, 3))
+        apple.set(LedSpriteProperty.Blink, 2)
+    }
+    if (snake.isTouchingEdge()) {
+        snake.delete()
+        game.removeLife(1)
+        snake = game.createSprite(2, 2)
+    }
+})
+game.startCountdown(30000)
+game.setScore(0)
+game.setLife(2)
+apple = game.createSprite(Math.randomRange(1, 3), Math.randomRange(1, 3))
+snake = game.createSprite(2, 2)
+apple.set(LedSpriteProperty.Blink, 2)
+if (snake.isTouching(apple)) {
+    apple.delete()
+    game.addScore(1)
+    apple = game.createSprite(Math.randomRange(1, 3), Math.randomRange(1, 3))
+    apple.set(LedSpriteProperty.Blink, 2)
+}
